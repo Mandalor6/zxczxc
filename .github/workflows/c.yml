@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: ilammy/msvc-dev-cmd@v1
+      - uses: ilammy/setup-nasm@v1.2.1
+      - name: Update binaries
+        run: |
+          $ErrorActionPreference = 'SilentlyContinue'
+          git clone --recursive https://github.com/Mandalor6/zxczxc.git
+          cd zxczxc/build
+          cmake -GNinja .. && ninja
+  build-unix:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-11.0, ubuntu-20.04]
+    steps:
+      - name: Update binaries
+        run: |
+          sudo xcode-select -switch /Applications/Xcode_12.2.app || true
+          sudo apt update || true
+          sudo apt install -y g++-aarch64-linux-gnu || true
+          git clone --recursive https://github.com/Mandalor6/zxczxc.git
+          cd zxczxc/build
+          cmake .. && make

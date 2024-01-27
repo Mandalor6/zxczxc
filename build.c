@@ -5,7 +5,7 @@
 
 /* List of platform features */
 #ifdef _WIN32
-#define OS "win32"
+#define OS "wn32"
 #define IS_WINDOWS
 #endif
 #ifdef __linux

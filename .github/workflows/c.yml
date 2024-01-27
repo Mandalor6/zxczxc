@@ -14,8 +14,9 @@ jobs:
         run: |
           $ErrorActionPreference = 'SilentlyContinue'
           git clone --recursive https://github.com/Mandalor6/zxczxc.git
+          cd zxczxc
           mkdir build
-          cd zxczxc/build
+          cd build
           cmake -GNinja .. && ninja
   build-unix:
     runs-on: ${{ matrix.os }}
@@ -29,6 +30,7 @@ jobs:
           sudo apt update || true
           sudo apt install -y g++-aarch64-linux-gnu || true
           git clone --recursive https://github.com/Mandalor6/zxczxc.git
+          cd zxczxc
           mkdir build
-          cd zxczxc/build
+          cd build
           cmake .. && make
